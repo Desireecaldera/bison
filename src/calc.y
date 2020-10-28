@@ -7,12 +7,13 @@
 {
     double dval;
     struct number *nval;
+    int fval;
 }
 
 %token <dval> INT FLOAT
-%token EOL
-
-%type <nval> number
+%token <fval> FUNC
+%token  EOL LPAREN RPAREN QUIT
+%type <nval> number expr f_expr
 
 %%
 
@@ -20,6 +21,7 @@ program:
     expr EOL {
         ylog(program, expr EOL);
         printNumber(stdout, $1);
+        YYACCEPT;
     }
     | QUIT {
         ylog(program, QUIT);
@@ -34,6 +36,26 @@ expr:
     | f_expr {
         ylog(expr, f_expr);
         $$ = $1;
+    };
+
+f_expr:
+    LPAREN FUNC expr RPAREN{
+        ylog( f_expr, LPAREN FUNC expr RPAREN);
+        $$ = calc( $2, $3, NULL);
+    }
+    | LPAREN FUNC expr expr RPAREN{
+        ylog( f_expr, LPAREN FUNC expr expr RPAREN);
+                $$ = calc( $2, $3, $4);
+    };
+
+number:
+    INT {
+        ylog(number, INT);
+        $$ = createNumber(INT_TYPE, $1);
+    }
+    | FLOAT {
+           ylog(number, FLOAT);
+           $$ = createNumber(FLOAT_TYPE, $1);
     };
 
 %%

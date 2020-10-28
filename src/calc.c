@@ -54,26 +54,43 @@ NUMBER *evalNeg(NUMBER *op)
 
 NUMBER *evalAbs(NUMBER *op)
 {
-    // TODO
-    return NULL;
+    NUMBER  *result = malloc(sizeof(NUMBER));
+    if( op->type == INT_TYPE ){
+        result->value = abs( op->value );
+    } else if( op->type == FLOAT_TYPE ){
+        result->value = fabs( op->value );
+    }
+
+    result->type = op->type;
+
+    // TODO(done but double check)
+    return result;
 }
 
 NUMBER *evalExp(NUMBER *op)
 {
-    // TODO
-    return NULL;
+    NUMBER  *result = malloc(sizeof(NUMBER));
+    result->value = exp( op->value);
+    result->type = op->type;
+    // TODO(done but double check)
+    return result;
 }
 
 NUMBER *evalLog(NUMBER *op)
 {
-    // TODO
-    return NULL;
+    NUMBER *result = malloc(sizeof(NUMBER));
+    result->value = log( op->value );
+    result->type = op->type;
+    // TODO(done but double check)
+    return result;
 }
 
 NUMBER *evalSqrt(NUMBER *op)
 {
-    // TODO
-    return NULL;
+    NUMBER *result = malloc(sizeof(NUMBER));
+    result->value = sqrt( op->value );
+    // TODO(done but double check)
+    return result;
 }
 
 NUMBER *evalAdd(NUMBER *op1, NUMBER *op2)
@@ -94,24 +111,63 @@ NUMBER *evalAdd(NUMBER *op1, NUMBER *op2)
 
 NUMBER *evalSub(NUMBER *op1, NUMBER *op2)
 {
-    // TODO
-    return NULL;
+    if (op2 == NULL)
+    {
+        yyerror("Too few arguments in addition.");
+    }
+    NUMBER *result = malloc(sizeof(NUMBER));
+    result->type = op1->type || op2->type;
+    result->value = op1->value - op2->value;
+    if (!result->type)
+    {
+        result->value = round(result->value);
+    }
+
+    // TODO(done but double check)
+    return result;
+
 }
 
 NUMBER *evalMult(NUMBER *op1, NUMBER *op2)
 {
-    // TODO
-    return NULL;
+    if (op2 == NULL)
+    {
+        yyerror("Too few arguments in addition.");
+    }
+    NUMBER *result = malloc(sizeof(NUMBER));
+    result->type = op1->type || op2->type;
+    result->value = op1->value * op2->value;
+    if (!result->type)
+    {
+        result->value = round(result->value);
+    }
+
+    // TODO(done but double check)
+    return result;
 }
 
 NUMBER *evalDiv(NUMBER *op1, NUMBER *op2)
 {
-    // TODO
-    return NULL;
+    if (op2 == NULL)
+    {
+        yyerror("Too few arguments in addition.");
+    }
+    NUMBER *result = malloc(sizeof(NUMBER));
+    result->type = op1->type || op2->type;
+    result->value = op1->value / op2->value;
+    if (!result->type)
+    {
+        result->value = round(result->value);
+    }
+
+    // TODO(done but double check)
+    return result;
 }
 
 NUMBER *evalRem(NUMBER *op1, NUMBER *op2)
 {
+
+
     // TODO
     return NULL;
 }
