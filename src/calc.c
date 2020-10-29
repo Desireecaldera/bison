@@ -71,7 +71,7 @@ NUMBER *evalExp(NUMBER *op)
 {
     NUMBER  *result = malloc(sizeof(NUMBER));
     result->value = exp( op->value);
-    result->type = op->type;
+    result->type = FLOAT_TYPE;
     // TODO(done but double check)
     return result;
 }
@@ -80,7 +80,7 @@ NUMBER *evalLog(NUMBER *op)
 {
     NUMBER *result = malloc(sizeof(NUMBER));
     result->value = log( op->value );
-    result->type = op->type;
+    result->type = FLOAT_TYPE;
     // TODO(done but double check)
     return result;
 }
@@ -89,6 +89,7 @@ NUMBER *evalSqrt(NUMBER *op)
 {
     NUMBER *result = malloc(sizeof(NUMBER));
     result->value = sqrt( op->value );
+    result->type = FLOAT_TYPE;
     // TODO(done but double check)
     return result;
 }
@@ -167,9 +168,20 @@ NUMBER *evalDiv(NUMBER *op1, NUMBER *op2)
 NUMBER *evalRem(NUMBER *op1, NUMBER *op2)
 {
 
+    if (op2 == NULL)
+    {
+        yyerror("Too few arguments in addition.");
+    }
+    NUMBER *result = malloc(sizeof(NUMBER));
+    result->type = op1->type || op2->type;
+    result->value = fmod( op1->value , op2->value);
+    if (!result->type)
+    {
+        result->value = round(result->value);
+    }
 
-    // TODO
-    return NULL;
+    // TODO(done but double check)
+    return result;
 }
 
 /*
