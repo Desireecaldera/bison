@@ -1,0 +1,12 @@
+(mult 3 (add 3 5))
+(div 2 (add 4 24))
+(mult 5 (sub 4 3))
+(sub 3 (add 4 3))
+(add 1 (sqrt 4))
+(div 2 (div 2 4))
+(sqrt 5.5)
+(log 2)
+(rem 3 4)
+(exp (exp 0))
+(log (log 4))
+quit
